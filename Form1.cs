@@ -19,16 +19,30 @@ namespace ArraysIntElements
 
         private void btnArraySum_Click(object sender, EventArgs e)
         {
-            string[] numbersStr = txtNumbers.Text.Split(',');
+            string input = txtNumbers.Text;
 
-            int[] numbers = Array.ConvertAll(numbersStr, int.Parse);
+            string[] StrNumbers = input.Split(','); 
 
-            int sum = 0; 
+            int[] numbers = new int [StrNumbers.Length];
+            int sum = 0;
+            bool Error = false;
 
-            foreach (int number in numbers)
-            sum += number;
+            for (int i = 0; i < StrNumbers.Length; i++)
+            {
+                if (!int.TryParse(StrNumbers[i], out int number))
+                {
+                    MessageBox.Show("Invalid Value: " + StrNumbers[i]);
+                    Error = true;
+                    break;
+                }
+                numbers[i] = number;
+                sum += number;
+            }
 
-            lblResult.Text = "Sum is: " + sum;
+            if (!Error)
+            {
+                lblResult.Text = "The sum is: " + sum;
+            }
         }
     }
 }
